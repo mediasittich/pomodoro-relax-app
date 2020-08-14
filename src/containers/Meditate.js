@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import TimerInput from "../components/TimerInput";
 import ControlButton from "../components/ControlButton";
 
+import TimerDisplay from "../components/TimerDisplay";
+import CanvasReducingCircle from "../components/CanvasReducingCircle";
+
 const MeditateApp = () => {
   const [timeSet, setTimeSet] = useState(25 * 60);
   const [timeLeft, setTimeLeft] = useState(25 * 60);
@@ -35,6 +38,9 @@ const MeditateApp = () => {
           handleUp={handleUp}
           handleDown={handleDown}
         />
+        <TimerDisplay>
+          <CanvasReducingCircle />
+        </TimerDisplay>
         <ControlButton title="start" action={startTimer} />
         <ControlButton title="stop" action={stopTimer} />
       </div>
