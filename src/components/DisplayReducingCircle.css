@@ -1,0 +1,17 @@
+.circle-container {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-ring {
+  width: 100%;
+  height: 100%;
+}
+.progress-ring__circle {
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(90deg) scale(-1, 1);
+  transform-origin: 50% 50%;
+}

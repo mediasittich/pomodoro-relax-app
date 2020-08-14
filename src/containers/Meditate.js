@@ -1,48 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import TimerInput from "../components/TimerInput";
 import ControlButton from "../components/ControlButton";
 
 import TimerDisplay from "../components/TimerDisplay";
-import CanvasReducingCircle from "../components/CanvasReducingCircle";
+import DisplayReducingCircle from "../components/DisplayReducingCircle";
+
+import "./Meditate.css";
 
 const MeditateApp = () => {
-  const [timeSet, setTimeSet] = useState(25 * 60);
-  const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [minutes, setMinutes] = useState(1);
+  const [seconds, setSeconds] = useState(minutes * 60);
+  const [secondsLeft, setSecondsLeft] = useState(seconds);
+  // const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
 
   // Setting the Timer
   const handleUp = () => {
-    setTimeSet(timeSet + 1 * 60);
+    setMinutes(minutes + 1 * 60);
   };
   const handleDown = () => {
-    setTimeSet(timeSet - 1 * 60);
+    setMinutes(minutes - 1 * 60);
   };
   // Control the Timer
-  const startTimer = () => {
-    setIsActive(true);
+  const toggleTimer = () => {
+    setIsActive(!isActive);
   };
-  const stopTimer = () => {
+  const resetTimer = () => {
     setIsActive(false);
+    setSecondsLeft(seconds);
   };
 
-  console.log(isActive);
-  console.log(timeSet);
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setSecondsLeft((secondsLeft) => secondsLeft - 1);
+      }, 1000);
+    } else if (!isActive && secondsLeft !== 0) {
+      clearInterval(interval);
+    }
+    // console.log(seconds);
+    return () => clearInterval(interval);
+  }, [isActive, secondsLeft]);
+
+  // console.log(isActive);
+  // console.log(minutes);
   return (
-    <div>
-      <h1>Meditation Timer Page</h1>
-      <div>time left</div>
-      <div>
+    <div className="app mediation-app">
+      {/* <div>time left</div> */}
+      <div className="app-content">
         <TimerInput
-          timeSet={timeSet}
+          timeSet={seconds}
           handleUp={handleUp}
           handleDown={handleDown}
         />
         <TimerDisplay>
-          <CanvasReducingCircle />
+          <DisplayReducingCircle time={seconds} timeremaining={secondsLeft} />
         </TimerDisplay>
-        <ControlButton title="start" action={startTimer} />
-        <ControlButton title="stop" action={stopTimer} />
+        <ControlButton
+          title={isActive ? "pause" : "start"}
+          action={toggleTimer}
+        />
+        <ControlButton title="reset" action={resetTimer} />
       </div>
     </div>
   );
