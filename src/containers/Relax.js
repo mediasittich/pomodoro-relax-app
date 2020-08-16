@@ -6,6 +6,8 @@ import ControlButton from "../components/ControlButton";
 import TimerDisplay from "../components/TimerDisplay";
 import DisplaySplitCircle from "../components/DisplaySplitCircle";
 
+import "./Relax.css";
+
 const RelaxApp = () => {
   const totalTime = 7500;
   const breatheTime = (totalTime / 5) * 2;
