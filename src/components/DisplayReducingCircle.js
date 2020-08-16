@@ -39,6 +39,16 @@ const DisplayReducingCircle = ({ time, timeremaining }) => {
               strokeDasharray={circumference}
               strokeDashoffset={offset}
             />
+            <text
+              x={parent.width / 2}
+              y={parent.height / 2}
+              dominantBaseline="middle"
+              textAnchor="middle"
+              fill="white"
+              fontSize="20"
+            >
+              {time}
+            </text>
           </svg>
         );
       }}

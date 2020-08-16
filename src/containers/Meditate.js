@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import TimerInput from "../components/TimerInput";
 import ControlButton from "../components/ControlButton";
+import { Container, Row, Col } from "react-bootstrap";
 
 import TimerDisplay from "../components/TimerDisplay";
 import DisplayReducingCircle from "../components/DisplayReducingCircle";
@@ -47,23 +48,28 @@ const MeditateApp = () => {
   // console.log(isActive);
   // console.log(minutes);
   return (
-    <div className="app mediation-app">
-      {/* <div>time left</div> */}
-      <div className="app-content">
-        <TimerInput
-          timeSet={seconds}
-          handleUp={handleUp}
-          handleDown={handleDown}
-        />
-        <TimerDisplay>
+    <div className="app meditation-app">
+      <Container>
+        <Row className="justify-content-center meditation-settings">
+          <Col xs={2}>
+            <TimerInput
+              timeSet={seconds}
+              handleUp={handleUp}
+              handleDown={handleDown}
+            />
+          </Col>
+        </Row>
+        <Row className="justify-content-center">
           <DisplayReducingCircle time={seconds} timeremaining={secondsLeft} />
-        </TimerDisplay>
-        <ControlButton
-          title={isActive ? "pause" : "start"}
-          action={toggleTimer}
-        />
-        <ControlButton title="reset" action={resetTimer} />
-      </div>
+        </Row>
+        <Row className="justify-content-center mt-3">
+          <ControlButton
+            title={isActive ? "pause" : "start"}
+            action={toggleTimer}
+          />
+          <ControlButton title="reset" action={resetTimer} />
+        </Row>
+      </Container>
     </div>
   );
 };
