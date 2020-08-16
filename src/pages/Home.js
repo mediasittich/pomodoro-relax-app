@@ -1,10 +1,12 @@
-import React from "react";
-import { Container } from "react-bootstrap";
+import React, { Link } from "react";
+import { Container, Button } from "react-bootstrap";
+
+import styles from "./Home.module.css";
 
 const Home = () => {
   return (
-    <main className="page">
-      <Container>
+    <main className={`page ${styles.page}`}>
+      <Container className="text-center">
         <h1>Cover your page.</h1>
         <p className="lead">
           Cover is a one-page template for building simple and beautiful home
