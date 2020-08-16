@@ -1,0 +1,43 @@
+.nav-link {
+  color: rgba(255, 255, 255, 0.5);
+  border-bottom: 0.25rem solid;
+  border-bottom-color: transparent;
+  font-weight: 700;
+  padding: 0.25rem 0;
+  margin-left: 1rem;
+}
+.nav-link:hover,
+.nav-link:focus {
+  color: rgba(255, 255, 255, 0.5);
+  border-bottom-color: rgba(255, 255, 255, 0.25);
+}
+.nav-link.active,
+.nav-link:active {
+  color: white;
+  border-bottom-color: white;
+}
+
+.bottom-nav {
+  background-color: #fff;
+}
+.bottom-nav a {
+  display: inline-block;
+  color: rgb(51, 51, 51, 0.4);
+  text-decoration: none;
+}
+.bottom-nav a:hover,
+.bottom-nav a:focus {
+}
+
+.bottom-nav a.active,
+.bottom-nav a:active {
+  color: rgb(51, 51, 51, 0.7);
+}
+
+.bottom-nav a svg {
+  width: 1.6rem;
+  height: auto;
+}
+.bottom-nav a span {
+  font-size: 0.75rem;
+}

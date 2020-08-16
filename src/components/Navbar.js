@@ -6,6 +6,8 @@ import { RiHome2Line } from "react-icons/ri";
 import { GiMeditation } from "react-icons/gi";
 import { IoIosTimer } from "react-icons/io";
 
+import "./Navbar.css";
+
 const tabs = [
   {
     id: 1,
@@ -41,13 +43,19 @@ const Navigation = () => {
   return (
     <header>
       {/* Top Navigation on large screens */}
-      <Navbar expand="lg" fixed="top" className="d-none d-lg-block">
+      <Navbar
+        expand="lg"
+        fixed="top"
+        variant="transparent"
+        className="d-none d-lg-block"
+      >
         <Container>
           <Navbar.Brand>stuff</Navbar.Brand>
           <Nav className="ml-auto">
             {tabs.map((tab) => (
               <NavItem key={tab.id}>
                 <NavLink
+                  className="nav-link"
                   exact={tab.exact}
                   activeClassName="active"
                   to={tab.route}
@@ -60,7 +68,12 @@ const Navigation = () => {
         </Container>
       </Navbar>
       {/* Bottom Navigation on small screens */}
-      <Navbar expand fixed="bottom" className="d-block d-lg-none">
+      <Navbar
+        expand
+        fixed="bottom"
+        variant="light"
+        className="d-block d-lg-none bottom-nav"
+      >
         <Nav className="w-100 justify-content-around">
           {tabs.map((tab) => (
             <NavItem key={tab.id}>
@@ -71,7 +84,7 @@ const Navigation = () => {
               >
                 <div className="row flex-column justify-content-center align-items-center">
                   {tab.icon}
-                  <div>{tab.label}</div>
+                  <span>{tab.label}</span>
                 </div>
               </NavLink>
             </NavItem>
