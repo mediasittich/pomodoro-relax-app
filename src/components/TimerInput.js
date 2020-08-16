@@ -1,12 +1,17 @@
 import React from "react";
+import { InputGroup, Form } from "react-bootstrap";
 
 const TimerInput = ({ timeSet, handleUp, handleDown }) => {
   return (
-    <div>
-      <button onClick={handleUp}>+</button>
-      <input type="number" value={timeSet / 60} readOnly />
-      <button onClick={handleDown}>-</button>
-    </div>
+    <InputGroup className="mb-3">
+      <InputGroup.Prepend>
+        <InputGroup.Text onClick={handleUp}>+</InputGroup.Text>
+      </InputGroup.Prepend>
+      <Form.Control value={timeSet / 60} readOnly={true}></Form.Control>
+      <InputGroup.Append>
+        <InputGroup.Text onClick={handleDown}>-</InputGroup.Text>
+      </InputGroup.Append>
+    </InputGroup>
   );
 };
 

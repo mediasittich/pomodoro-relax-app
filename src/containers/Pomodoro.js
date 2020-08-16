@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import TimerInput from "../components/TimerInput";
 import ControlButton from "../components/ControlButton";
 
+import { Container, Row, Col } from "react-bootstrap";
+
 import TimerDisplay from "../components/TimerDisplay";
 import DisplayReducingCircle from "../components/DisplayReducingCircle";
 
@@ -45,21 +47,37 @@ const PomodoroApp = () => {
   return (
     <div className="app pomodoro-app">
       {/* <div>time left</div> */}
-      <div className="app-content">
-        <TimerInput
-          timeSet={seconds}
-          handleUp={handleUp}
-          handleDown={handleDown}
-        />
-        <TimerDisplay>
+
+      <Container>
+        <Row className="justify-content-center pomodoro-settings">
+          <Col className="d-flex flex-column justify-content-center align-items-center">
+            <p className="lead">Session length</p>
+            <TimerInput
+              timeSet={seconds}
+              handleUp={handleUp}
+              handleDown={handleDown}
+            />
+          </Col>
+          <Col className="d-flex flex-column justify-content-center align-items-center">
+            <p className="lead">Break length</p>
+            <TimerInput
+              timeSet={seconds}
+              handleUp={handleUp}
+              handleDown={handleDown}
+            />
+          </Col>
+        </Row>
+        <Row className="justify-content-center">
           <DisplayReducingCircle time={seconds} timeremaining={secondsLeft} />
-        </TimerDisplay>
-        <ControlButton
-          title={isActive ? "pause" : "start"}
-          action={toggleTimer}
-        />
-        <ControlButton title="reset" action={resetTimer} />
-      </div>
+        </Row>
+        <Row className="justify-content-center mt-3">
+          <ControlButton
+            title={isActive ? "pause" : "start"}
+            action={toggleTimer}
+          />
+          <ControlButton title="reset" action={resetTimer} />
+        </Row>
+      </Container>
     </div>
   );
 };
