@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-import TimerInput from "../components/TimerInput";
-import ControlButton from "../components/ControlButton";
-
-import TimerDisplay from "../components/TimerDisplay";
 import DisplaySplitCircle from "../components/DisplaySplitCircle";
-
-import "./Relax.css";
+import Circle from "../assets/image/circle.svg";
+import styles from "./Relax.module.css";
 
 const RelaxApp = () => {
   const totalTime = 7500;
   const breatheTime = (totalTime / 5) * 2;
   const holdTime = totalTime / 5;
 
+  let textInner = "";
+
   return (
-    <div className="app relax-app">
-      {/* <div>time left</div> */}
-      <div className="app-content">
-        <TimerDisplay>
-          <DisplaySplitCircle
-            totalTime={totalTime}
-            breatheTime={breatheTime}
-            holdTime={holdTime}
-          />
-        </TimerDisplay>
+    <div className={`app ${styles.relaxApp}`}>
+      <div className={styles.container}>
+        <div className={styles.circle}></div>
+        <p className={styles.text}></p>
+        <div className={styles.dotContainer}>
+          <div className={styles.dot}></div>
+        </div>
+        <div className={styles.conicCircle}>
+          {/* <Circle /> */}
+          <DisplaySplitCircle />
+        </div>
       </div>
     </div>
   );

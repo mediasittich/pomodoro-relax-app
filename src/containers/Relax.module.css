@@ -1,0 +1,117 @@
+.relaxApp {
+  background-color: var(--relax-color);
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  width: 300px;
+  margin: auto;
+  position: relative;
+  transform: scale(1);
+}
+.circle {
+  background-color: #010f1c;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 50%;
+}
+.text::before {
+  content: "";
+  color: white;
+  animation: text-animation 7.5s linear forwards infinite;
+}
+.dotContainer {
+  position: absolute;
+  top: -40px;
+  left: 140px;
+  width: 20px;
+  height: 190px;
+  /* background: red; */
+  animation: rotate 7.5s linear forwards infinite;
+  transform-origin: bottom center;
+}
+.dot {
+  background-color: #fff;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+  display: block;
+}
+.conicCircle {
+  height: 320px;
+  width: 320px;
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  /* z-index: -2; */
+  /* background-image: url("../assets/image/circle.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; */
+}
+
+.container {
+  animation: grow-shrink 7.5s linear forwards infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes grow-shrink {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.2);
+  }
+  60% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes text-animation {
+  0% {
+    content: "Breathe In";
+    transform: scale(1);
+  }
+  38% {
+    content: "Breathe In";
+    transform: scale(1);
+  }
+  40% {
+    content: "Hold";
+    transform: scale(1.2);
+  }
+  58% {
+    content: "Hold";
+    transform: scale(1.2);
+  }
+  60% {
+    content: "Breathe Out";
+    transform: scale(1.2);
+  }
+  98% {
+    content: "Breathe Out";
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
