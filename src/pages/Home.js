@@ -1,5 +1,5 @@
-import React, { Link } from "react";
-import { Container, Button } from "react-bootstrap";
+import React from "react";
+import { Container } from "react-bootstrap";
 
 import styles from "./Home.module.css";
 

@@ -4,7 +4,6 @@ import TimerInput from "../components/TimerInput";
 import ControlButton from "../components/ControlButton";
 import { Container, Row, Col } from "react-bootstrap";
 
-import TimerDisplay from "../components/TimerDisplay";
 import DisplayReducingCircle from "../components/DisplayReducingCircle";
 
 import "./Meditate.css";
@@ -30,6 +29,7 @@ const MeditateApp = () => {
   const resetTimer = () => {
     setIsActive(false);
     setSecondsLeft(seconds);
+    setSeconds(seconds); // remove this later
   };
 
   useEffect(() => {

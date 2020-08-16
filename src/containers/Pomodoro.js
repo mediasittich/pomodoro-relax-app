@@ -28,6 +28,7 @@ const PomodoroApp = () => {
   const resetTimer = () => {
     setIsActive(false);
     setSecondsLeft(seconds);
+    setSeconds(seconds); // remove this
   };
 
   useEffect(() => {
