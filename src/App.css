@@ -1,18 +1,16 @@
-/* .app {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+:root {
+  --home-color: var(--info);
+  --pomodoro-color: #e74c3c;
+  --relax-color: var(--teal);
+  --meditate--color: var(--cyan);
 }
-.app-title {
+
+*,
+*::before,
+*::after {
+  outline: none;
 }
-.app-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-} */
+
 .page,
 .app {
   width: 100vw;
