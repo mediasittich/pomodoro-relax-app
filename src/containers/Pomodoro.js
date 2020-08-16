@@ -4,7 +4,6 @@ import ControlButton from "../components/ControlButton";
 
 import { Container, Row, Col } from "react-bootstrap";
 
-import TimerDisplay from "../components/TimerDisplay";
 import DisplayReducingCircle from "../components/DisplayReducingCircle";
 
 import "./Pomodoro.css";
@@ -50,7 +49,10 @@ const PomodoroApp = () => {
 
       <Container>
         <Row className="justify-content-center pomodoro-settings">
-          <Col className="d-flex flex-column justify-content-center align-items-center">
+          <Col
+            xs={2}
+            className="d-flex flex-column justify-content-center align-items-center"
+          >
             <p className="lead">Session length</p>
             <TimerInput
               timeSet={seconds}
@@ -58,7 +60,10 @@ const PomodoroApp = () => {
               handleDown={handleDown}
             />
           </Col>
-          <Col className="d-flex flex-column justify-content-center align-items-center">
+          <Col
+            xs={2}
+            className="d-flex flex-column justify-content-center align-items-center"
+          >
             <p className="lead">Break length</p>
             <TimerInput
               timeSet={seconds}
