@@ -39,9 +39,9 @@ const tabs = [
 
 const Navigation = () => {
   return (
-    <div>
+    <header>
       {/* Top Navigation on large screens */}
-      <Navbar expand="lg" sticky="top" className="d-none d-lg-block">
+      <Navbar expand="lg" fixed="top" className="d-none d-lg-block">
         <Container>
           <Navbar.Brand>stuff</Navbar.Brand>
           <Nav className="ml-auto">
@@ -78,7 +78,7 @@ const Navigation = () => {
           ))}
         </Nav>
       </Navbar>
-    </div>
+    </header>
   );
 };
 
