@@ -2,31 +2,40 @@ import { useState, useRef, useEffect } from "react";
 
 export const useAnimationFrame = (duration) => {
   const requestRef = useRef();
-  const previousTimeRef = useRef();
+  const startTimeRef = useRef();
 
   const [isRunning, setIsRunning] = useState(false);
-  const [elapsed, setElapsed] = useState(0);
   const [timeLeft, setTimeLeft] = useState(duration);
 
   function onFrame() {
     // Function to be executed on each animation frame
     console.log("frame...");
-    // If previousTime exists
-    if (previousTimeRef.current !== undefined) {
-      // do stuff...
-      const newElapsed = Date.now() - previousTimeRef.current;
-      setElapsed((prevElapsed) => prevElapsed + newElapsed);
-      console.log("elapsed time: ", elapsed);
-      setTimeLeft((prevTimeLeft) => prevTimeLeft - newElapsed);
+    // If previousTime doesn't exist
+    if (!startTimeRef.current) {
+      startTimeRef.current = Date.now();
     }
-    // Else set previousTime to current time
-    previousTimeRef.current = Date.now();
 
-    loop();
+    if (isRunning) {
+      // do stuff...
+      const deltaTime = Date.now() - startTimeRef.current;
+
+      // console.log("start time: ", startTimeRef.current);
+      // console.log("delta: ", deltaTime);
+      if (deltaTime < duration) {
+        setTimeLeft(duration - deltaTime);
+        loop();
+      } else {
+        cancelAnimationFrame(onFrame);
+        setIsRunning(false);
+        setTimeLeft(0);
+        startTimeRef.current = undefined;
+        requestRef.current = undefined;
+      }
+    }
   }
 
   function loop() {
-    console.log("loop function");
+    // console.log("loop function");
     // Call onFrame() on next animation frame
     requestRef.current = requestAnimationFrame(onFrame);
   }
@@ -35,8 +44,13 @@ export const useAnimationFrame = (duration) => {
     if (!isRunning) {
       console.log("Starting timer...");
       setIsRunning(true);
+      startTimeRef.current = Date.now();
       loop();
     }
+  }
+
+  function pauseTimer() {
+    console.log("Timer paused...");
   }
 
   function resetTimer() {
@@ -45,9 +59,8 @@ export const useAnimationFrame = (duration) => {
     if (requestRef.current) {
       cancelAnimationFrame(requestRef.current);
       requestRef.current = undefined;
-      previousTimeRef.current = undefined;
+      startTimeRef.current = undefined;
       setIsRunning(false);
-      setElapsed(0);
       setTimeLeft(duration);
     }
 
@@ -60,47 +73,13 @@ export const useAnimationFrame = (duration) => {
 
   useEffect(() => {
     console.log("useEffect when isRunning is changed to ", isRunning);
-    // cancel animationFrame
-    // set states properly
+
     if (isRunning) {
       requestRef.current = requestAnimationFrame(onFrame);
     }
     // If component unmounts, stop animation
     return () => cancelAnimationFrame(requestRef.current);
-
-    // return () => {
-    //   cleanup
-    // }
   }, [isRunning]);
 
-  return [isRunning, elapsed, timeLeft, setTimeLeft, startTimer, resetTimer];
+  return [isRunning, timeLeft, setTimeLeft, startTimer, pauseTimer, resetTimer];
 };
-
-// function start() {
-//   if (!requestRef.current) {
-//     requestRef.current = requestAnimationFrame(loop);
-//   }
-// }
-// function stop() {
-//   if (requestRef.current) {
-//     window.cancelAnimationFrame(loop);
-//     requestRef.current = undefined;
-//   }
-// }
-
-// function doStuff() {
-//   console.log("doing stuff...");
-// }
-
-// function onFrame() {
-//   if (previousTimeRef.current !== undefined) {
-//     const elapsed = Date.now() - previousTimeRef.current;
-//     setTimeLeft((prevTimeLeft) => prevTimeLeft - elapsed);
-//   }
-
-// }
-
-// function onStart() {
-//   console.log(">>>> start with time ");
-//   loop();
-// }
