@@ -1,73 +1,88 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useAnimationFrame } from "../hooks/hooks";
 
 import TimerInput from "../components/TimerInput";
 import ControlButton from "../components/ControlButton";
 import { Container, Row, Col } from "react-bootstrap";
 
-import DisplayReducingCircle from "../components/DisplayReducingCircle";
+// import DisplayReducingCircle from "../components/DisplayReducingCircle";
 
 import "./Meditate.css";
 
 const MeditateApp = () => {
-  const [minutes, setMinutes] = useState(1);
-  const [seconds, setSeconds] = useState(minutes * 60);
-  const [secondsLeft, setSecondsLeft] = useState(seconds);
-  // const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [duration, setDuration] = useState(10 * 60 * 1000);
   const [isActive, setIsActive] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [timeLeft, setTimeLeft] = useAnimationFrame(
+    duration,
+    isActive,
+    isPaused
+  );
 
-  // Setting the Timer
   const handleUp = () => {
-    setMinutes(minutes + 1 * 60);
+    if (duration < 60 * 60 * 1000) {
+      setDuration(duration + 1 * 60 * 1000);
+    }
   };
   const handleDown = () => {
-    setMinutes(minutes - 1 * 60);
+    if (duration > 0) {
+      setDuration(duration - 1 * 60 * 1000);
+    }
   };
-  // Control the Timer
-  const toggleTimer = () => {
-    setIsActive(!isActive);
+
+  const startTimer = () => {
+    setIsActive(true);
+    setIsPaused(false);
+    setTimeLeft(duration);
+  };
+  const pauseTimer = () => {
+    setIsActive(false);
+    setIsPaused(true);
   };
   const resetTimer = () => {
     setIsActive(false);
-    setSecondsLeft(seconds);
-    setSeconds(seconds); // remove this later
+    setIsPaused(false);
   };
 
-  useEffect(() => {
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        setSecondsLeft((secondsLeft) => secondsLeft - 1);
-      }, 1000);
-    } else if (!isActive && secondsLeft !== 0) {
-      clearInterval(interval);
-    }
-    // console.log(seconds);
-    return () => clearInterval(interval);
-  }, [isActive, secondsLeft]);
+  const calculateTimeLeft = (difference) => {
+    return {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60),
+    };
+  };
+  const displayFormat = (val) => ("0" + val).slice(-2);
 
-  // console.log(isActive);
-  // console.log(minutes);
+  //
+  // console.log(startTime);
   return (
     <div className="app meditation-app">
       <Container>
+        <p>duration: {duration}</p>
+        <p>is active: {isActive.toString()}</p>
+        <p>
+          timeLeft:
+          {displayFormat(calculateTimeLeft(timeLeft).minutes)}:
+          {displayFormat(calculateTimeLeft(timeLeft).seconds)}
+        </p>
+
         <Row className="justify-content-center meditation-settings">
-          <Col xs={2}>
+          <Col sm={4}>
             <TimerInput
-              timeSet={seconds}
+              timeSet={duration / 60 / 1000}
               handleUp={handleUp}
               handleDown={handleDown}
             />
           </Col>
         </Row>
-        <Row className="justify-content-center">
-          <DisplayReducingCircle time={seconds} timeremaining={secondsLeft} />
-        </Row>
+        {/* <Row className="justify-content-center">
+          <DisplayReducingCircle time={seconds} timeremaining={''} />
+        </Row> */}
         <Row className="justify-content-center mt-3">
-          <ControlButton
-            title={isActive ? "pause" : "start"}
-            action={toggleTimer}
-          />
-          <ControlButton title="reset" action={resetTimer} />
+          <ControlButton title="start" action={() => startTimer()} />
+          <ControlButton title="pause" action={() => pauseTimer()} />
+          <ControlButton title="reset" action={() => resetTimer()} />
         </Row>
       </Container>
     </div>
