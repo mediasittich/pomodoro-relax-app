@@ -59,12 +59,12 @@ export const useAnimationFrame = (duration) => {
 
   function resetTimer() {
     if (requestRef.current) {
-      cancelAnimationFrame(requestRef.current);
-      requestRef.current = undefined;
-      startTimeRef.current = undefined;
       setIsRunning(false);
       setTimeLeft(duration);
       setSavedTime(duration);
+      cancelAnimationFrame(requestRef.current);
+      requestRef.current = undefined;
+      startTimeRef.current = undefined;
     }
 
     console.log(requestRef.current);
