@@ -6,28 +6,26 @@ export const useAnimationFrame = (duration) => {
 
   const [isRunning, setIsRunning] = useState(false);
   const [timeLeft, setTimeLeft] = useState(duration);
+  const [savedTime, setSavedTime] = useState(duration);
 
   function onFrame() {
     // Function to be executed on each animation frame
-    console.log("frame...");
     // If previousTime doesn't exist
     if (!startTimeRef.current) {
       startTimeRef.current = Date.now();
     }
 
     if (isRunning) {
-      // do stuff...
       const deltaTime = Date.now() - startTimeRef.current;
 
-      // console.log("start time: ", startTimeRef.current);
-      // console.log("delta: ", deltaTime);
-      if (deltaTime < duration) {
-        setTimeLeft(duration - deltaTime);
+      if (deltaTime < savedTime) {
+        setTimeLeft(savedTime - deltaTime);
         loop();
       } else {
         cancelAnimationFrame(onFrame);
         setIsRunning(false);
         setTimeLeft(0);
+        setSavedTime(duration);
         startTimeRef.current = undefined;
         requestRef.current = undefined;
       }
@@ -35,7 +33,6 @@ export const useAnimationFrame = (duration) => {
   }
 
   function loop() {
-    // console.log("loop function");
     // Call onFrame() on next animation frame
     requestRef.current = requestAnimationFrame(onFrame);
   }
@@ -51,25 +48,27 @@ export const useAnimationFrame = (duration) => {
 
   function pauseTimer() {
     console.log("Timer paused...");
+    if (isRunning) {
+      setIsRunning(false);
+      setSavedTime(timeLeft);
+      cancelAnimationFrame(requestRef.current);
+      requestRef.current = undefined;
+      startTimeRef.current = undefined;
+    }
   }
 
   function resetTimer() {
-    console.log("Resetting timer...");
-    // do stuff...
     if (requestRef.current) {
       cancelAnimationFrame(requestRef.current);
       requestRef.current = undefined;
       startTimeRef.current = undefined;
       setIsRunning(false);
       setTimeLeft(duration);
+      setSavedTime(duration);
     }
 
     console.log(requestRef.current);
   }
-
-  useEffect(() => {
-    console.log("useEffect 1");
-  }, []);
 
   useEffect(() => {
     console.log("useEffect when isRunning is changed to ", isRunning);
