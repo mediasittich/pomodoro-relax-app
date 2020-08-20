@@ -7,7 +7,7 @@ const TimerInput = ({ timeSet, handleUp, handleDown }) => {
       <InputGroup.Prepend>
         <InputGroup.Text onClick={handleUp}>+</InputGroup.Text>
       </InputGroup.Prepend>
-      <Form.Control value={timeSet / 60} readOnly={true}></Form.Control>
+      <Form.Control value={timeSet} readOnly={true}></Form.Control>
       <InputGroup.Append>
         <InputGroup.Text onClick={handleDown}>-</InputGroup.Text>
       </InputGroup.Append>

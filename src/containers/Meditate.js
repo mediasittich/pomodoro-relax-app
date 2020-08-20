@@ -10,14 +10,19 @@ import { Container, Row, Col } from "react-bootstrap";
 import "./Meditate.css";
 
 const MeditateApp = () => {
-  const [duration, setDuration] = useState(10 * 60 * 1000);
-  const [isActive, setIsActive] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [timeLeft, setTimeLeft] = useAnimationFrame(
-    duration,
-    isActive,
-    isPaused
-  );
+  const [duration, setDuration] = useState(3 * 60 * 1000);
+  // const [isActive, setIsActive] = useState(false);
+  // const [isRunning, setIsRunning] = useState(false);
+  // const [isPaused, setIsPaused] = useState(false);
+  const [
+    isRunning,
+    elapsed,
+    timeLeft,
+    setTimeLeft,
+    startTimer,
+    resetTimer,
+  ] = useAnimationFrame(duration);
+  // const start = useAnimationFrame(isRunning);
 
   const handleUp = () => {
     if (duration < 60 * 60 * 1000) {
@@ -28,20 +33,6 @@ const MeditateApp = () => {
     if (duration > 0) {
       setDuration(duration - 1 * 60 * 1000);
     }
-  };
-
-  const startTimer = () => {
-    setIsActive(true);
-    setIsPaused(false);
-    setTimeLeft(duration);
-  };
-  const pauseTimer = () => {
-    setIsActive(false);
-    setIsPaused(true);
-  };
-  const resetTimer = () => {
-    setIsActive(false);
-    setIsPaused(false);
   };
 
   const calculateTimeLeft = (difference) => {
@@ -59,11 +50,18 @@ const MeditateApp = () => {
   return (
     <div className="app meditation-app">
       <Container>
-        <p>duration: {duration}</p>
-        <p>is active: {isActive.toString()}</p>
         <p>
-          timeLeft:
-          {displayFormat(calculateTimeLeft(timeLeft).minutes)}:
+          duration: {displayFormat(calculateTimeLeft(duration).minutes)}:
+          {displayFormat(calculateTimeLeft(duration).seconds)}
+        </p>
+        <p>isRunning: {isRunning.toString()}</p>
+        <p>
+          {/* {elapsed} */}
+          {displayFormat(calculateTimeLeft(elapsed).minutes)}:
+          {displayFormat(calculateTimeLeft(elapsed).seconds)}
+        </p>
+        <p>
+          timeLeft: {displayFormat(calculateTimeLeft(timeLeft).minutes)}:
           {displayFormat(calculateTimeLeft(timeLeft).seconds)}
         </p>
 
@@ -81,7 +79,7 @@ const MeditateApp = () => {
         </Row> */}
         <Row className="justify-content-center mt-3">
           <ControlButton title="start" action={() => startTimer()} />
-          <ControlButton title="pause" action={() => pauseTimer()} />
+          {/* <ControlButton title="pause" action={() => pauseTimer()} /> */}
           <ControlButton title="reset" action={() => resetTimer()} />
         </Row>
       </Container>
