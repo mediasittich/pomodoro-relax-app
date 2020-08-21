@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 export const useAnimationFrame = (duration) => {
   const requestRef = useRef();
@@ -24,7 +24,7 @@ export const useAnimationFrame = (duration) => {
       } else {
         cancelAnimationFrame(onFrame);
         setIsRunning(false);
-        setTimeLeft(0);
+        setTimeLeft(0); // or duration
         setSavedTime(duration);
         startTimeRef.current = undefined;
         requestRef.current = undefined;
@@ -66,13 +66,16 @@ export const useAnimationFrame = (duration) => {
       requestRef.current = undefined;
       startTimeRef.current = undefined;
     }
-
-    console.log(requestRef.current);
+    setTimeLeft(duration);
+    setSavedTime(duration);
   }
 
   useEffect(() => {
-    console.log("useEffect when isRunning is changed to ", isRunning);
+    setTimeLeft(duration);
+    setSavedTime(duration);
+  }, [duration]);
 
+  useEffect(() => {
     if (isRunning) {
       requestRef.current = requestAnimationFrame(onFrame);
     }
@@ -80,5 +83,5 @@ export const useAnimationFrame = (duration) => {
     return () => cancelAnimationFrame(requestRef.current);
   }, [isRunning]);
 
-  return [isRunning, timeLeft, setTimeLeft, startTimer, pauseTimer, resetTimer];
+  return [isRunning, timeLeft, startTimer, pauseTimer, resetTimer];
 };
