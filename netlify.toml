@@ -1,0 +1,9 @@
+[build]
+    base = "pomodoro-relax-app/"
+    publish = "pomodoro-relax-app/build/"
+    command = "npm run build"
+
+[[redirects]]
+    from = "/*"
+    to = "/index.html"
+    status = 200
