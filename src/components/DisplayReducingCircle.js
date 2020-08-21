@@ -1,58 +1,46 @@
 import React from "react";
-import { ParentSize } from "@vx/responsive";
+import TimeDisplay from "./TimeDisplay";
+import { calculateTimeInSec } from "../scripts/timerCalculations";
 import "./DisplayReducingCircle.css";
 
 const DisplayReducingCircle = ({ time, timeremaining }) => {
+  const strokeWidth = 2;
+  const size = 100;
+  const radius = (0.8 * size) / 2 - strokeWidth * 2;
+  const circumference = radius * 2 * Math.PI;
+  const timeProportion =
+    Math.round(calculateTimeInSec(timeremaining)) / calculateTimeInSec(time);
+  const offset = circumference - timeProportion * circumference;
   return (
-    <ParentSize style={{ height: "50vh", width: "100%" }}>
-      {(parent) => {
-        const strokeWidth = 10;
-        const size = parent.height;
-        const radius = (0.8 * size) / 2 - strokeWidth * 2;
-        const circumference = radius * 2 * Math.PI;
-        const timeProportion = timeremaining / time;
-        const offset = circumference - timeProportion * circumference;
-        return (
-          <svg
-            className="progress-ring"
-            width={parent.width}
-            height={parent.height}
-            // viewBox={`0 0 ${width} ${height}`}
-          >
-            <circle
-              className="progress-ring__circle"
-              stroke="rgba(0,0,0,.2)"
-              strokeWidth={strokeWidth}
-              fill="transparent"
-              r={radius}
-              cx={parent.width / 2}
-              cy={parent.height / 2}
-            />
-            <circle
-              className="progress-ring__circle"
-              stroke="white"
-              strokeWidth={strokeWidth}
-              fill="transparent"
-              r={radius}
-              cx={parent.width / 2}
-              cy={parent.height / 2}
-              strokeDasharray={circumference}
-              strokeDashoffset={offset}
-            />
-            <text
-              x={parent.width / 2}
-              y={parent.height / 2}
-              dominantBaseline="middle"
-              textAnchor="middle"
-              fill="white"
-              fontSize="20"
-            >
-              {time}
-            </text>
-          </svg>
-        );
-      }}
-    </ParentSize>
+    <svg
+      className="progress-ring"
+      width={size}
+      height={size}
+      viewBox={`0 0 100 100`}
+      preserveAspectRatio="xMinYMin meet"
+    >
+      <circle
+        className="progress-ring__circle"
+        stroke="rgba(0,0,0,.2)"
+        strokeWidth={strokeWidth}
+        fill="transparent"
+        r={radius}
+        cx={size / 2}
+        cy={size / 2}
+      />
+      <circle
+        className="progress-ring__circle"
+        stroke="white"
+        strokeWidth={strokeWidth}
+        fill="transparent"
+        r={radius}
+        cx={size / 2}
+        cy={size / 2}
+        strokeDasharray={circumference}
+        strokeDashoffset={offset}
+      />
+      <TimeDisplay size={size} time={timeremaining} />
+    </svg>
   );
 };
 
