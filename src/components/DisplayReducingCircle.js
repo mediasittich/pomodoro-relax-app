@@ -3,6 +3,7 @@ import TimeDisplay from "./TimeDisplay";
 import { calculateTimeInSec } from "../scripts/timerCalculations";
 import "./DisplayReducingCircle.css";
 
+// TODO: Circle is too slow compared to timer numbers - fix
 const DisplayReducingCircle = ({ time, timeremaining }) => {
   const strokeWidth = 2;
   const size = 100;
